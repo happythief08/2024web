@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+/>      
+    <title>숫자 맞추기 게임</title>
+    <script>
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        function guessNumber() {
+            let userGuess = document.getElementById('userGuess').value;
+            attempts++;
+            let message = '';
+            if(userGuess > 100){
+                alert("100보다 작아야 합니다");
+            }
+            else if (userGuess < randomNumber) {
+                alert(userGuess + "는 정답보다 낮습니다.");
+            } else if (userGuess > randomNumber) {
+                alert(userGuess + "는 정답보다 높습니다.");
+            } else {
+                alert(userGuess + ", 정답입니다!\n" + attempts + "번 걸렸습니다!");
+                document.getElementById('guessButton').disabled = true; // 버튼 비활성화
+            }
+
+        }
+    </script>
+</head>
+<body>
+    <h1>숫자 맞추기 게임</h1>
+    <p>1부터 100 사이의 숫자를 맞춰보세요!</p>
+    <input type="number" id="userGuess" min="1" max="100">
+    <button id="guessButton" onclick="guessNumber()">제출</button>
+    <p id="result"></p>
+</body>
+</html>
