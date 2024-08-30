@@ -1,0 +1,85 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #e6e6e6; /* 배경을 밝은 회색으로 변경 */
+}
+
+.calculator {
+    background-color: #333; /* 계산기 배경을 어두운 색으로 변경 */
+    padding: 20px;
+    border-radius: 20px; /* 모서리를 둥글게 */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    width: 250px; /* 계산기 넓이 조정 */
+    display: grid;
+    grid-template-rows: auto auto 1fr; /* 화면, 버튼 영역을 분리 */
+    gap: 10px;
+}
+
+.calculator-screen {
+    width: 100%;
+    height: 60px;
+    background-color: #000; /* 화면 배경을 검은색으로 변경 */
+    color: #0f0; /* 글자 색을 녹색으로 변경 */
+    border: none;
+    border-radius: 15px;
+    text-align: right;
+    font-size: 2.5em;
+    padding: 10px;
+    box-shadow: inset 0 0 10px #000; /* 안쪽에 그림자 추가 */
+}
+
+.calculator-buttons {
+    display: grid;
+    gap: 10px;
+}
+
+.digits {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3x3 숫자 그리드 */
+    gap: 10px;
+}
+
+.operators {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 연산자 버튼들을 3열로 배치 */
+    gap: 10px;
+}
+
+.bottom-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* AC, =, 0 버튼을 배치 */
+    gap: 10px;
+}
+
+button {
+    padding: 15px;
+    font-size: 1.5em;
+    border: none;
+    border-radius: 10px;
+    background-color: #444; /* 버튼 배경을 어두운 회색으로 */
+    color: #fff; /* 버튼 글자 색을 흰색으로 */
+    transition: background-color 0.3s, transform 0.1s; /* 클릭 시 애니메이션 */
+    box-shadow: 0 5px #222; /* 버튼 아래 그림자 */
+}
+
+button:active {
+    background-color: #555; /* 눌렸을 때 버튼 색상 */
+    transform: translateY(4px); /* 눌렸을 때 버튼 움직임 */
+    box-shadow: 0 1px #222; /* 눌렸을 때 그림자 줄임 */
+}
+
+.operator {
+    background-color: #f39c12; /* 연산자 버튼 색 */
+}
+
+.equal {
+    background-color: #27ae60; /* = 버튼 색 */
+}
+
+.clear {
+    background-color: #c0392b; /* AC 버튼 색 */
+}
