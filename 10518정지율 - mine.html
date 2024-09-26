@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <style>
+        * {
+            text-align: center;
+        }
+
+        #board {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #board tr td {
+            border: 1px solid white;
+            background: #34da79;
+            width: 16px;
+            height: 16px;
+            text-align: center;
+        }
+
+        #board tr td.clicked {
+            background: #6c5ee7;
+        }
+
+        #board tr td.mine {
+            background: #FF0000;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>지뢰찾기</h1>
+    <span id="timer">10초</span>
+    <table id="board">
+    </table>
+    <BUTTON onclick="genGrid();">새로운 게임</BUTTON>
+    <script>
+        let timer = document.getElementById("timer");
+        let startSecond = 10;
+        let gameEnded = false; // 게임이 종료되었는지 확인하는 변수 (GPT가 만든 부분)
+        let countdown; // 타이머를 멈추기 위해 인터벌 변수를 전역으로 선언 (GPT가 만든 부분)
+        let mineRow, mineCol; // 지뢰의 위치를 저장할 변수 (GPT가 만든 부분)
+
+        function startTimer() {
+            countdown = setInterval(function () {
+                if (startSecond > 0) {
+                    timer.innerHTML = startSecond + '초';
+                    startSecond--;
+                } else {
+                    timer.innerHTML = "0초";
+                    if (!gameEnded) { // 게임이 이미 끝났는지 확인 (GPT가 만든 부분)
+                        gameEnded = true; // 실패 시 게임 종료 상태로 전환 (GPT가 만든 부분)
+                        alert("실패했습니다.");
+                        disableBoard(); // 상호작용 비활성화 (GPT가 만든 부분)
+                    }
+                    clearInterval(countdown); // 타이머 멈춤 (GPT가 만든 부분)
+                }
+            }, 1000);
+        }
+
+        let grid = document.getElementById("board");
+        genGrid();
+
+        function genGrid() {
+            grid.innerHTML = "";
+            startSecond = 10;
+            gameEnded = false; // 게임 종료 상태 초기화 (GPT가 만든 부분)
+            startTimer();
+
+            // 무작위로 하나의 지뢰 위치 선택 (GPT가 만든 부분)
+            mineRow = Math.floor(Math.random() * 8); // 0~7의 무작위 행 선택 (GPT가 만든 부분)
+            mineCol = Math.floor(Math.random() * 8); // 0~7의 무작위 열 선택 (GPT가 만든 부분)
+
+            for (let i = 0; i < 8; i++) {
+                let row = grid.insertRow(i);
+                for (let j = 0; j < 8; j++) {
+                    let cell = row.insertCell(j);
+                    cell.onclick = function () { clickBox(this, i, j); };
+
+                    // 하나의 셀에만 지뢰 설정 (GPT가 만든 부분)
+                    if (i === mineRow && j === mineCol) {
+                        cell.setAttribute("mine", "true");
+                    } else {
+                        cell.setAttribute("mine", "false");
+                    }
+                }
+            }
+        }
+
+        function clickBox(cell, row, col) {
+            if (cell.getAttribute("mine") == "true") {
+                cell.className = "mine";
+                gameEnded = true; // 게임이 끝났음을 표시 (GPT가 만든 부분)
+                clearInterval(countdown); // 지뢰를 찾으면 타이머 멈춤 (GPT가 만든 부분)
+                alert("클리어!");
+                disableBoard(); // 상호작용 비활성화 (GPT가 만든 부분)
+            } else {
+                cell.className = "clicked";
+                // 지뢰와의 거리 계산 (GPT가 만든 부분)
+                let distance = Math.abs(row - mineRow) + Math.abs(col - mineCol);
+                // 거리에 따라 배경색 설정 (거리가 가까울수록 어두운 색) (GPT가 만든 부분)
+                let shade = Math.max(0, 255 - distance * 50);
+                cell.style.backgroundColor = `rgb(${shade}, ${shade}, ${shade})`;
+            }
+        }
+
+        function disableBoard() {
+            // 모든 셀의 클릭 이벤트를 제거하여 상호작용을 비활성화 (GPT가 만든 부분)
+            let cells = document.querySelectorAll("#board td");
+            cells.forEach(function (cell) {
+                cell.onclick = null;
+            });
+        }
+    </script>
+</body>
+
+</html>
